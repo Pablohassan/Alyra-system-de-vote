@@ -56,7 +56,8 @@ contract Voting is Ownable {
         _;
     }
 
-    constructor() {
+    constructor() onlyOwner {
+       
         changeStatus();
     }
 
@@ -92,7 +93,7 @@ contract Voting is Ownable {
     }
 
     function proposalTime(string[] memory proposalDescription)
-        public
+       external
         checkRegistering
     {
         require(
@@ -122,7 +123,7 @@ contract Voting is Ownable {
         emit Voted(msg.sender, _votedProposalId);
     }
 
-    function winningProposal() public view returns (uint256 winningProposalId) {
+    function winningProposal() external view returns (uint256 winningProposalId) {
         uint256 winningVoteCount = 0;
         for (uint256 j = 0; j < proposals.length; j++) {
             if (proposals[j].voteCount > winningVoteCount) {
